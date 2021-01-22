@@ -6,7 +6,14 @@ void main() {
   ));
 }
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  int ageNumer = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,12 +66,54 @@ class Profile extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Text(
-              '23',
+              '$ageNumer',
               style: TextStyle(
                 color: Colors.amberAccent[200],
                 letterSpacing: 2.0,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
+              ),
+            ),
+            Center(
+              child: Row(
+                children: [
+                  Text(
+                    'Cambiar edad: ',
+                    style: TextStyle(
+                      color: Colors.amberAccent[200],
+                      letterSpacing: 2.0,
+                      fontSize: 10.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.remove,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (ageNumer > 0) {
+                          ageNumer -= 1;
+                        }
+                      });
+                    },
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 20.0),
+                  IconButton(
+                    icon: Icon(
+                      Icons.add,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (ageNumer < 100) {
+                          ageNumer += 1;
+                        }
+                      });
+                    },
+                    color: Colors.white,
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 30.0),
