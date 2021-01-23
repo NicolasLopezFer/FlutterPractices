@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'frase.dart';
+import 'carta_frase.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -12,17 +14,38 @@ class Listado extends StatefulWidget {
 }
 
 class _ListadoState extends State<Listado> {
+  List<Frase> frases = [
+    Frase(
+        autor: 'Nicolas Lopez',
+        texto: 'Frase numero 1 Frase numero 1 Frase numero 1'),
+    Frase(
+        autor: 'Nicolas Lopez',
+        texto: 'Frase numero 2 Frase numero 2 Frase numero 2 Frase numero 2'),
+    Frase(
+        autor: 'Nicolas Lopez',
+        texto:
+            'Frase numero 3 Frase numero 3 Frase numero 3 Frase numero 3 Frase numero 3'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red[400],
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text('Listado'),
-        backgroundColor: Colors.red[300],
+        backgroundColor: Colors.redAccent,
         centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+      body: Column(
+        children: frases
+            .map((frase) => CartaFrase(
+                frase: frase,
+                delete: () {
+                  setState(() {
+                    frases.remove(frase);
+                  });
+                }))
+            .toList(),
       ),
     );
   }

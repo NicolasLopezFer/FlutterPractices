@@ -1,6 +1,6 @@
 # list_cards
 
-Lista de cartas con frases con su autor, intento de pantalla scrollable
+Lista de cartas con frases con su autor
 
 ## Getting Started
 
