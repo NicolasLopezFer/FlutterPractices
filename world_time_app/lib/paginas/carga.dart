@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
+import 'package:world_time_app/services/world_time.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Carga extends StatefulWidget {
   @override
@@ -8,37 +8,36 @@ class Carga extends StatefulWidget {
 }
 
 class _CargaState extends State<Carga> {
-  void getTime() async {
-    //make request
-    Response response =
-        await get('https://worldtimeapi.org/api/timezone/America/Bogota');
-    Map data = jsonDecode(response.body);
-    //print(data);
-    //get datos
-    String datetime = data['datetime'];
-    String offset = data['utc_offset'].substring(0, 3);
-    //print(datetime);
-    //print(offset);
+  void setupWorldTime() async {
+    WorldTime instance = WorldTime(
+        location: 'Berlin', flag: 'germany.png', url: 'Europe/Berlin');
 
-    DateTime now = DateTime.parse(datetime);
-    if (offset.substring(0, 1) == '+') {
-      now = now.add(Duration(hours: int.parse(offset.substring(1))));
-    } else if (offset.substring(0, 1) == '-') {
-      now = now.subtract(Duration(hours: int.parse(offset.substring(1))));
-    }
-    print(now);
+    await instance.getTime();
+
+    Navigator.pushReplacementNamed(context, '/home', arguments: {
+      'location': instance.location,
+      'flag': instance.flag,
+      'time': instance.time,
+      'isDaytime': instance.isDaytime,
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    getTime();
+    setupWorldTime();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('Pagina de carga'),
+      backgroundColor: Colors.blue[900],
+      body: Center(
+        child: SpinKitFadingCube(
+          color: Colors.white,
+          size: 80.0,
+        ),
+      ),
     );
   }
 }
