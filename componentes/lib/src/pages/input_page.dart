@@ -11,6 +11,15 @@ class _InputPageState extends State<InputPage> {
   String _contra = '';
   String _fecha = '';
 
+  String _optSeleccionada = 'Volar';
+
+  List<String> _poderes = [
+    'Volar',
+    'Rayos X',
+    'Super Fuerza',
+    'Super delicioso'
+  ];
+
   TextEditingController _inputFieldDateController = new TextEditingController();
 
   @override
@@ -132,12 +141,35 @@ class _InputPageState extends State<InputPage> {
     }
   }
 
+  List<DropdownMenuItem<String>> getOpcionesDropDown() {
+    List<DropdownMenuItem<String>> lista = [];
+
+    _poderes.forEach((poder) {
+      lista.add(DropdownMenuItem(
+        child: Text(poder),
+        value: poder,
+      ));
+    });
+
+    return lista;
+  }
+
   Widget _crearDropdown() {
-    return DropdownButton(
-      items: [],
-      onChanged: (opcionSeleccionada) {
-        print(opcionSeleccionada);
-      },
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Icon(Icons.select_all),
+        SizedBox(width: 30.0),
+        DropdownButton(
+          value: _optSeleccionada,
+          items: getOpcionesDropDown(),
+          onChanged: (opcionSeleccionada) {
+            setState(() {
+              _optSeleccionada = opcionSeleccionada;
+            });
+          },
+        )
+      ],
     );
   }
 
@@ -145,6 +177,7 @@ class _InputPageState extends State<InputPage> {
     return ListTile(
       title: Text('Nombre es: $_nombre'),
       subtitle: Text('Email: $_email'),
+      trailing: Text(_optSeleccionada),
     );
   }
 }
