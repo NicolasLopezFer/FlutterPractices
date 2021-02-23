@@ -52,11 +52,11 @@ class PeliculasProvider {
       'page': _popularesPage.toString(),
     });
 
-    final resp = await _procesarRespuesta(url);
+    return await _procesarRespuesta(url);
 
-    _populares.addAll(resp);
-    popularesSink(_populares);
+    // _populares.addAll(resp);
+    // popularesSink(_populares);
 
-    return resp;
+    // return resp;
   }
 }
